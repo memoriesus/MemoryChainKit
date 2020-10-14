@@ -25,3 +25,16 @@ public extension UIWindow {
         return top
     }
 }
+public extension UIWindow {
+    func setRootViewController(_ viewController:UIViewController) {
+        if rootViewController == viewController {
+            return
+        }
+        if let rootVC = (rootViewController as? UINavigationController)?.rootViewController,
+            rootVC == viewController{
+            return
+        }
+        rootViewController = viewController.embedInNavigationControllerIfNeeded()
+        makeKeyAndVisible()
+    }
+}
